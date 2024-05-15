@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beae8c45bfa378141973464d32dbcadd, type: 3}
   m_Name: NewDialog
   m_EditorClassIdentifier: 
-  speakerName: 
-  texts: []
+  speakerName: Patata
+  texts:
+  - Doraemon
+  - Picachu
   options:
-  - optionText: 
+  - optionText: Pokemon
+    nextDialog: {fileID: 11400000}
+  - optionText: Digimon
     nextDialog: {fileID: 11400000}

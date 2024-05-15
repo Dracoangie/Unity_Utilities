@@ -28,8 +28,24 @@ public class DialogEditor : EditorWindow
             {
                 if (dialog != null && index < dialog.texts.Count)
                 {
-                    dialog.texts[index] = EditorGUI.TextField(rect, dialog.texts[index]);
+                    // Calcular la altura del texto
+                    GUIStyle style = EditorStyles.textArea;
+                    float height = style.CalcHeight(new GUIContent(dialog.texts[index]), rect.width);
+                    rect.height = height;
+                    dialog.texts[index] = EditorGUI.TextArea(rect, dialog.texts[index], style);
                 }
+            },
+
+            elementHeightCallback = (int index) =>
+            {
+                // Configurar altura del elemento según el contenido del texto
+                if (dialog != null && index < dialog.texts.Count)
+                {
+                    GUIStyle style = EditorStyles.textArea;
+                    float height = style.CalcHeight(new GUIContent(dialog.texts[index]), EditorGUIUtility.currentViewWidth);
+                    return height + EditorGUIUtility.standardVerticalSpacing;
+                }
+                return EditorGUIUtility.singleLineHeight;
             },
 
             onAddCallback = (ReorderableList list) =>
