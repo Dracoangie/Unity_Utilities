@@ -14,10 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speakerName: Patata
   texts:
-  - Doraemon
+  - DoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemonDoraemon
   - Picachu
+  - 
   options:
   - optionText: Pokemon
-    nextDialog: {fileID: 11400000}
+    nextDialog: {fileID: 11400000, guid: 6ef4b5fca0a289841a81937484f6fa98, type: 2}
   - optionText: Digimon
-    nextDialog: {fileID: 11400000}
+    nextDialog: {fileID: 11400000, guid: 89f9d640fb827d049804cf431fb8b4cb, type: 2}
+  - optionText: Ninguno Pto
+    nextDialog: {fileID: 0}

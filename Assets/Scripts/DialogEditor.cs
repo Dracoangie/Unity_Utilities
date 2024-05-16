@@ -17,6 +17,7 @@ public class DialogEditor : EditorWindow
 
     private void OnEnable()
     {
+        // Inicialización de la lista de textos
         textList = new ReorderableList(new List<string>(), typeof(string), true, true, true, true)
         {
             drawHeaderCallback = (Rect rect) =>
@@ -28,17 +29,18 @@ public class DialogEditor : EditorWindow
             {
                 if (dialog != null && index < dialog.texts.Count)
                 {
-                    // Calcular la altura del texto
                     GUIStyle style = EditorStyles.textArea;
                     float height = style.CalcHeight(new GUIContent(dialog.texts[index]), rect.width);
                     rect.height = height;
                     dialog.texts[index] = EditorGUI.TextArea(rect, dialog.texts[index], style);
+
+                    // Marcar como sucio
+                    EditorUtility.SetDirty(dialog);
                 }
             },
 
             elementHeightCallback = (int index) =>
             {
-                // Configurar altura del elemento según el contenido del texto
                 if (dialog != null && index < dialog.texts.Count)
                 {
                     GUIStyle style = EditorStyles.textArea;
@@ -53,6 +55,7 @@ public class DialogEditor : EditorWindow
                 if (dialog != null)
                 {
                     dialog.texts.Add(string.Empty);
+                    EditorUtility.SetDirty(dialog); // Marcar como sucio
                 }
             },
 
@@ -61,10 +64,12 @@ public class DialogEditor : EditorWindow
                 if (dialog != null && list.index >= 0 && list.index < dialog.texts.Count)
                 {
                     dialog.texts.RemoveAt(list.index);
+                    EditorUtility.SetDirty(dialog); // Marcar como sucio
                 }
             }
         };
 
+        // Inicialización de la lista de opciones
         optionList = new ReorderableList(new List<DialogOption>(), typeof(DialogOption), true, true, true, true)
         {
             drawHeaderCallback = (Rect rect) =>
@@ -79,6 +84,9 @@ public class DialogEditor : EditorWindow
                     DialogOption option = dialog.options[index];
                     option.optionText = EditorGUI.TextField(new Rect(rect.x, rect.y, rect.width / 2, EditorGUIUtility.singleLineHeight), option.optionText);
                     option.nextDialog = (Dialog)EditorGUI.ObjectField(new Rect(rect.x + rect.width / 2 + 5, rect.y, rect.width / 2 - 5, EditorGUIUtility.singleLineHeight), option.nextDialog, typeof(Dialog), false);
+
+                    // Marcar como sucio
+                    EditorUtility.SetDirty(dialog);
                 }
             },
 
@@ -87,6 +95,7 @@ public class DialogEditor : EditorWindow
                 if (dialog != null)
                 {
                     dialog.options.Add(new DialogOption());
+                    EditorUtility.SetDirty(dialog); // Marcar como sucio
                 }
             },
 
@@ -95,6 +104,7 @@ public class DialogEditor : EditorWindow
                 if (dialog != null && list.index >= 0 && list.index < dialog.options.Count)
                 {
                     dialog.options.RemoveAt(list.index);
+                    EditorUtility.SetDirty(dialog); // Marcar como sucio
                 }
             }
         };
@@ -109,15 +119,21 @@ public class DialogEditor : EditorWindow
         if (dialog != null)
         {
             dialog.speakerName = EditorGUILayout.TextField("Nombre del personaje", dialog.speakerName);
-
             EditorGUILayout.Space();
 
-            // Actualizar listas para apuntar a los datos actuales
+            // Actualizar las listas para apuntar a los datos actuales
             textList.list = dialog.texts;
             textList.DoLayoutList();
 
             optionList.list = dialog.options;
             optionList.DoLayoutList();
+
+            // Guardar cambios en el proyecto
+            if (GUI.changed)
+            {
+                EditorUtility.SetDirty(dialog);
+                AssetDatabase.SaveAssets();
+            }
         }
     }
 }

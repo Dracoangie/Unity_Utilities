@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beae8c45bfa378141973464d32dbcadd, type: 3}
   m_Name: sdasd
   m_EditorClassIdentifier: 
-  speakerName: 
+  speakerName: Patata
   texts:
-  - 
-  options: []
+  - Asdasdasfadfsdaaaafasdfasdfasdf
+  options:
+  - optionText: Mucho Texto
+    nextDialog: {fileID: 11400000, guid: ecafdd18d91fdbf4484cfbc45c75c2cb, type: 2}
+  - optionText: Nada
+    nextDialog: {fileID: 0}
+  - optionText: Nada
+    nextDialog: {fileID: 0}
+  - optionText: Nada
+    nextDialog: {fileID: 0}

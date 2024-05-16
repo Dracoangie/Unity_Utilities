@@ -1,20 +1,54 @@
-using TMPro; 
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
+using TMPro;
 
 public class DialogUI : MonoBehaviour
 {
-    public TMP_Text speakerText; 
-    public TMP_Text dialogueText; 
+    public TMP_Text speakerText;
+    public TMP_Text dialogueText;
     public GameObject optionButtonPrefab;
     public Transform optionButtonContainer;
-    public DialogManager manager;
+    private DialogManager activeDialogManager;
+    private Coroutine typingCoroutine;
+    private bool isTyping = false;
+
+    public void SetActiveDialogManager(DialogManager dialogManager)
+    {
+        activeDialogManager = dialogManager;
+    }
 
     public void UpdateDialogueUI(string speaker, string text)
     {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+        }
         speakerText.text = speaker;
+        typingCoroutine = StartCoroutine(TypeText(text));
+    }
+
+    private IEnumerator TypeText(string text)
+    {
+        isTyping = true;
+        dialogueText.text = "";
+        foreach (char letter in text.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(0.05f);
+        }
+        isTyping = false;
+    }
+
+    public void CompleteTyping(string text)
+    {
+        if (typingCoroutine != null)
+        {
+            StopCoroutine(typingCoroutine);
+        }
         dialogueText.text = text;
+        isTyping = false;
     }
 
     public void ShowOptions(List<DialogOption> options)
@@ -34,7 +68,7 @@ public class DialogUI : MonoBehaviour
                 if (button != null)
                 {
                     int optionIndex = i; // Captura el índice en una variable local para el closure
-                    button.onClick.AddListener(() => manager.SelectOption(optionIndex));
+                    button.onClick.AddListener(() => activeDialogManager.SelectOption(optionIndex));
                 }
                 else
                 {
@@ -50,7 +84,7 @@ public class DialogUI : MonoBehaviour
         }
     }
 
-    private void ClearOptions()
+    public void ClearOptions()
     {
         foreach (Transform child in optionButtonContainer)
         {
@@ -58,11 +92,16 @@ public class DialogUI : MonoBehaviour
         }
     }
 
+    public void CloseDialogueUI()
+    {
+        gameObject.SetActive(false);
+        activeDialogManager.ResetDialogue();
+        activeDialogManager.EnablePlayerInput();
+    }
+
     void Start()
     {
-        // Inicia un diálogo para demostración (asumiendo que 'manager' y un objeto Dialog están ya asignados)
-        manager.StartDialogue(manager.currentDialog);
-        UpdateDialogueUI(manager.currentDialog.speakerName, manager.currentDialog.texts[0]);
+        gameObject.SetActive(false);
     }
 
     void Update()
@@ -70,8 +109,33 @@ public class DialogUI : MonoBehaviour
         // Este es un disparador simple para avanzar el texto o mostrar opciones
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            manager.DisplayText();
-            ShowOptions(manager.currentDialog.options);
+            if (isTyping)
+            {
+                CompleteTyping(activeDialogManager.currentDialog.texts[activeDialogManager.currentTextIndex - 1]);
+            }
+            else
+            {
+                if (activeDialogManager.currentTextIndex < activeDialogManager.currentDialog.texts.Count)
+                {
+                    activeDialogManager.DisplayText();
+                }
+                else
+                {
+                    activeDialogManager.DisplayOptions();
+                }
+            }
         }
+    }
+
+    void OnEnable()
+    {
+        DialogEvents.OnEventTriggered += RespondToEvent;
+    }
+
+    void RespondToEvent(GameObject sender, DialogManager dialogManager)
+    {
+        Debug.Log("Subscriber: Evento recibido");
+        gameObject.SetActive(true);
+        dialogManager.StartDialogue(dialogManager.currentDialog, sender);
     }
 }
