@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnerExample : MonoBehaviour
 {
     ObjectPoolManager poolManager;
-    public int spawnTime = 1;
+    public float spawnTime = 1;
     private float spawnTimeAux = 0;
 
     private void Start()
