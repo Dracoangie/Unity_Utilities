@@ -26,6 +26,12 @@ public class Subscriber : MonoBehaviour
         EventManager.UnregisterListener(this);
     }
 
+    public void HandleEvent(Component sender, object data, bool remainInSubscribed)
+    {
+        OnEventRaised(sender, data);
+        if (!remainInSubscribed) EventManager.UnregisterListener(this);
+    }
+
     public void OnEventRaised(Component sender, object data)
     {
         response.Invoke(sender, data);

@@ -13,30 +13,49 @@ public class EventManager : MonoBehaviour
 
     public static void Raise(string id)
     {
-        Raise(id,null, null);
+        Raise(id,null, null, true);
+    }
+
+    public static void Raise(string id, Component sender)
+    {
+        Raise(id, sender, null, true);
     }
 
     public static void Raise(string id,object data)
     {
-        Raise(id,null, data);
+        Raise(id,null, data, true);
     }
 
-    public static void Raise(string id,Component sender)
+    public static void Raise(string id, bool remainInSubscribed)
     {
-        Raise(id,sender, null);
+        Raise(id, null, null, remainInSubscribed);
     }
 
-    public static void Raise(string id, Component sender, object data)
+
+    public static void Raise(string id, Component sender,object data)
+    {
+        Raise(id, sender, data, true);
+    }
+    public static void Raise(string id, Component sender, bool remainInSubscribed)
+    {
+        Raise(id, sender, null, remainInSubscribed);
+    }
+
+    public static void Raise(string id, object data, bool remainInSubscribed)
+    {
+        Raise(id, null, data, remainInSubscribed);
+    }
+
+    public static void Raise(string id, Component sender, object data, bool remainInSubscribed)
     {
         if (string.IsNullOrEmpty(id)) return;
 
         List<Subscriber> subscribersList;
         if (listeners.TryGetValue(id, out subscribersList))
         {
-            // Se hace una copia para evitar problemas si la lista es modificada durante la iteración
             foreach (Subscriber subscriber in new List<Subscriber>(subscribersList))
             {
-                subscriber?.OnEventRaised(sender, data);
+                subscriber?.HandleEvent(sender, data, remainInSubscribed);
             }
         }
     }

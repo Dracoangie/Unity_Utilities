@@ -12,7 +12,7 @@ public class Publisher : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("Publisher: Space disparado");
-            EventManager.Raise("space", mesaje);
+            EventManager.Raise("space", mesaje, false);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {

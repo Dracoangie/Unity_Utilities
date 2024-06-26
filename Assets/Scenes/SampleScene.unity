@@ -312,7 +312,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 709657046}
         m_TargetAssemblyTypeName: eventSuscribed, Assembly-CSharp
-        m_MethodName: response
+        m_MethodName: Response
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
