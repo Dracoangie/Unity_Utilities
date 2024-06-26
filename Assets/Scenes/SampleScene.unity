@@ -244,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb7a6a83f42f6974a8bf3225e431d649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mesaje: 12
 --- !u!4 &531769342
 Transform:
   m_ObjectHideFlags: 0
@@ -268,7 +269,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 709657044}
-  - component: {fileID: 709657043}
+  - component: {fileID: 709657045}
+  - component: {fileID: 709657046}
+  - component: {fileID: 709657047}
   m_Layer: 0
   m_Name: Subscriber
   m_TagString: Untagged
@@ -276,18 +279,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &709657043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 709657042}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd1736ceb4b51c944998b91556df7022, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &709657044
 Transform:
   m_ObjectHideFlags: 0
@@ -303,7 +294,75 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1069047285
+--- !u!114 &709657045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709657042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd1736ceb4b51c944998b91556df7022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: space
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 709657046}
+        m_TargetAssemblyTypeName: eventSuscribed, Assembly-CSharp
+        m_MethodName: response
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &709657046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709657042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0eaa26fc4c2dacc4d834f79cb52d9dae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &709657047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 709657042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd1736ceb4b51c944998b91556df7022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: escape
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 709657046}
+        m_TargetAssemblyTypeName: eventSuscribed, Assembly-CSharp
+        m_MethodName: escaped
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &1710905420
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -311,34 +370,63 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1069047287}
-  - component: {fileID: 1069047286}
+  - component: {fileID: 1710905423}
+  - component: {fileID: 1710905422}
+  - component: {fileID: 1710905421}
   m_Layer: 0
-  m_Name: EventManager
+  m_Name: suscriber2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1069047286
+--- !u!114 &1710905421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069047285}
+  m_GameObject: {fileID: 1710905420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b649aac133ecbe146ab4aafe6cff21c9, type: 3}
+  m_Script: {fileID: 11500000, guid: 0eaa26fc4c2dacc4d834f79cb52d9dae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1069047287
+--- !u!114 &1710905422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1710905420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd1736ceb4b51c944998b91556df7022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: space
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1710905421}
+        m_TargetAssemblyTypeName: eventSuscribed, Assembly-CSharp
+        m_MethodName: response
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &1710905423
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1069047285}
+  m_GameObject: {fileID: 1710905420}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.9224038, y: 0.39299732, z: -0.05453172}
@@ -352,6 +440,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
-  - {fileID: 1069047287}
   - {fileID: 531769342}
   - {fileID: 709657044}
+  - {fileID: 1710905423}

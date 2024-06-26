@@ -1,24 +1,33 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Dependencies.Sqlite;
+using UnityEditor.PackageManager;
 using UnityEngine;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class CustomGameEvent : UnityEvent<Component, object> { }
 
 public class Subscriber : MonoBehaviour
 {
-    // suscribimos RespondToEvent al EventManager cuando se activa el objeto
-    void OnEnable()
+    public string id; 
+
+    [Tooltip("Response to invoke when Event with GameData is raised.")]
+    public CustomGameEvent response;
+
+    private void OnEnable()
     {
-        EventManager.OnEventTriggered += RespondToEvent;
+        EventManager.RegisterListener(this);
     }
 
-    // desuscribimos RespondToEvent al EventManager cuando se desactiva el objeto
-    void OnDisable()
+    private void OnDisable()
     {
-        EventManager.OnEventTriggered -= RespondToEvent;
+        EventManager.UnregisterListener(this);
     }
 
-    // evento que se suscribe
-    void RespondToEvent()
+    public void OnEventRaised(Component sender, object data)
     {
-        Debug.Log("Subscriber: Evento recibido");
+        response.Invoke(sender, data);
     }
 }
